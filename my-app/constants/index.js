@@ -234,6 +234,13 @@ export const abi = [
   },
   {
     inputs: [],
+    name: "mint",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "name",
     outputs: [
       {
@@ -575,4 +582,5 @@ export const abi = [
   },
 ];
 
-export const NFT_CONTRACT_ADDRESS = "0x00ed812F5d18F60990e9D5403463A73875930684";
+export const NFT_CONTRACT_ADDRESS =
+  "0xAa351cF7174CA5fe5cb9c00C4be47B61ce8073fE";
