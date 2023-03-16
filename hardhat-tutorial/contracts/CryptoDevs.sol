@@ -7,9 +7,9 @@ import "./IWhitelist.sol";
 
 contract CryptoDevs is ERC721Enumerable, Ownable {
     /**
-     * @dev _baseTokenURI for computing {tokenURI}. If set, the resulting URI for each
-     * token will be the concatenation of the `baseURI` and the `tokenId`.
-     */
+      * @dev _baseTokenURI for computing {tokenURI}. If set, the resulting URI for each
+      * token will be the concatenation of the `baseURI` and the `tokenId`.
+      */
     string _baseTokenURI;
 
     //  _price is the price of one Crypto Dev NFT
@@ -33,7 +33,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
     // timestamp for when presale would end
     uint256 public presaleEnded;
 
-    modifier onlyWhenNotPaused() {
+    modifier onlyWhenNotPaused {
         require(!_paused, "Contract currently paused");
         _;
     }
@@ -43,7 +43,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
       * name in our case is `Crypto Devs` and symbol is `CD`.
       * Constructor for Crypto Devs takes in the baseURI to set _baseTokenURI for the collection.
       * It also initializes an instance of whitelist interface.
-    */
+      */
     constructor (string memory baseURI, address whitelistContract) ERC721("Crypto Devs", "CD") {
         _baseTokenURI = baseURI;
         whitelist = IWhitelist(whitelistContract);
@@ -51,7 +51,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
 
     /**
     * @dev startPresale starts a presale for the whitelisted addresses
-    */
+      */
     function startPresale() public onlyOwner {
         presaleStarted = true;
         // Set presaleEnded time as current timestamp + 5 minutes
@@ -75,15 +75,14 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
     }
 
     /**
-     * allows a user to mint 1 NFT per txn
-     */
-
+    * @dev mint allows a user to mint 1 NFT per transaction after the presale has ended.
+    */
     function mint() public payable onlyWhenNotPaused {
-      require(presaleStarted && block.timestamp >= presaleEnded, 'Presale has not ended yet');
-      require(tokenIds < maxTokenIds, 'Exceed maximum Crypto Devs supply');
-      require(msg.value >= _price, 'Ether send is not correct');
-      tokenIds += 1;
-      _safeMint(msg.sender, tokenIds);
+        require(presaleStarted && block.timestamp >=  presaleEnded, "Presale has not ended yet");
+        require(tokenIds < maxTokenIds, "Exceed maximum Crypto Devs supply");
+        require(msg.value >= _price, "Ether sent is not correct");
+        tokenIds += 1;
+        _safeMint(msg.sender, tokenIds);
     }
 
     /**
